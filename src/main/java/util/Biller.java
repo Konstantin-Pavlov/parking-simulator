@@ -6,18 +6,19 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 
 public class Biller {
+    private Biller() {
+    }
 
-    public static double calculateBill(){
-        // use BigDecimal for cash ops
-        BigDecimal value = new BigDecimal("123.456789");
-        BigDecimal roundedValue = value.setScale(2, RoundingMode.HALF_UP);
-        System.out.println(roundedValue); // Output: 123.46
+    public static double calculateBill(LocalDateTime entryTime, LocalDateTime exitTime){
+        // todo use BigDecimal for cash ops
+//        BigDecimal value = new BigDecimal("123.456789");
+//        BigDecimal roundedValue = value.setScale(2, RoundingMode.HALF_UP);
+//        System.out.println(roundedValue); // Output: 123.46
 
-        LocalDateTime entryTime = LocalDateTime.of(2023, 12, 20, 20, 0);
-        LocalDateTime exitTime = LocalDateTime.of(2023, 12, 22, 15, 21);
+        //todo 30 mins is free
 
         double costPerFiveMinutes = 0.10;
-        double totalCost = 0.0;
+        double totalCost = entryTime.getMinute() % 5 == 0 ? 0.0 : 0.1; // for example: if the car arrives at 15:57 we charge 5 minutes (15:55-16:00)
 
         int startFreeParkingTime = 21;
         int endFreeParkingTime = 9;
@@ -41,10 +42,10 @@ public class Biller {
                 }
                 currentMinute = currentMinute.plusMinutes(1);
             }
-
         }
+        System.out.println();
 
-        System.out.printf("%.2f%n", totalCost);
+//        System.out.printf("%.2f%n", totalCost);
         return totalCost;
     }
 }
