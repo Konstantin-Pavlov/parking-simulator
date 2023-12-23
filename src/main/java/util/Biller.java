@@ -2,6 +2,8 @@ package util;
 
 import customExceptions.IlligalDateException;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
@@ -9,7 +11,7 @@ public class Biller {
     private Biller() {
     }
 
-    public static double calculateBill(LocalDateTime entryTime, LocalDateTime exitTime) throws IlligalDateException {
+    public static BigDecimal calculateBill(LocalDateTime entryTime, LocalDateTime exitTime) throws IlligalDateException {
         // todo use BigDecimal for cash ops
 //        BigDecimal value = new BigDecimal("123.456789");
 //        BigDecimal roundedValue = value.setScale(2, RoundingMode.HALF_UP);
@@ -21,11 +23,11 @@ public class Biller {
 
         // 30 minutes is free
         if (Duration.between(entryTime, exitTime).toMinutes() <= 30) {
-            return 0.0;
+            return BigDecimal.valueOf(0.0).setScale(2, RoundingMode.HALF_UP);
         }
 
-        double costPerFiveMinutes = 0.10;
-        double totalCost = entryTime.getMinute() % 5 == 0 ? 0.0 : 0.1; // for example: if the car arrives at 15:57 we charge 5 minutes (15:55-16:00)
+        BigDecimal costPerFiveMinutes = BigDecimal.valueOf(0.10);
+        BigDecimal totalCost = BigDecimal.valueOf(entryTime.getMinute() % 5 == 0 ? 0.0 : 0.1); // for example: if the car arrives at 15:57 we charge 5 minutes (15:55-16:00)
 
         int startFreeParkingTime = 21;
         int endFreeParkingTime = 9;
@@ -45,14 +47,13 @@ public class Biller {
                 currentMinute = currentMinute.plusHours(12);
             } else {
                 if (currentMinute.getMinute() % 5 == 0) {
-                    totalCost += costPerFiveMinutes;
+                    totalCost = totalCost.add(costPerFiveMinutes);
                 }
                 currentMinute = currentMinute.plusMinutes(1);
             }
         }
-        System.out.println();
 
 //        System.out.printf("%.2f%n", totalCost);
-        return totalCost;
+        return totalCost.setScale(2, RoundingMode.HALF_UP); // rounding up to 2 digits after floating point
     }
 }
