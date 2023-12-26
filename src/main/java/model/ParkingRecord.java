@@ -1,12 +1,13 @@
 package model;
 
-import customExceptions.IlligalDateException;
-
+import java.math.BigDecimal;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
 public class ParkingRecord {
-    private final  Car car; // maybe move to parking log
+    private final Car car; // maybe move to parking log
+    private Check check;
+    private BigDecimal bill;
     private boolean complete;
     private final LocalDateTime arrivalTime;
     private LocalDateTime departureTime;
@@ -21,15 +22,17 @@ public class ParkingRecord {
 //        this.duration = Duration.between(arrivalTime, departureTime);
     }
 
-    public void registerEntryToParking(){
+    public void registerEntryToParking() {
         // useless
     }
 
-    public void registerLeavingTheParkingLot(LocalDateTime departureTime){
+    public void registerLeavingTheParkingLot(LocalDateTime departureTime) {
         this.departureTime = departureTime;
         this.complete = true;
         // generate bill? and store it in this class
+        this.check = new Check(arrivalTime, departureTime);
         // generate check? and store it in this class
+        this.bill = check.getBill();
     }
 
     public Car getCar() {
@@ -44,16 +47,21 @@ public class ParkingRecord {
         return departureTime;
     }
 
+    public Check getCheck() {
+        return check;
+    }
+
+    public BigDecimal getBill() {
+        return bill;
+    }
+
     public boolean isRecordComplete() {
         return complete;
     }
 
-    public Duration getDuration() throws IlligalDateException {
-        if (arrivalTime == null ) {
-            throw new  IlligalDateException("arrival time is null");
-        } else if(departureTime == null){
-            throw new IlligalDateException("departure time is null");
-        }
+    public Duration getDuration() {
         return Duration.between(arrivalTime, departureTime);
     }
+
+
 }
