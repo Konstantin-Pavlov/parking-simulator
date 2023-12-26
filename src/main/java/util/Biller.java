@@ -11,15 +11,11 @@ public class Biller {
     private Biller() {
     }
 
-    public static BigDecimal calculateBill(LocalDateTime entryTime, LocalDateTime exitTime) throws IlligalDateException {
+    public static BigDecimal calculateBill(LocalDateTime entryTime, LocalDateTime exitTime)  {
         // todo use BigDecimal for cash ops
 //        BigDecimal value = new BigDecimal("123.456789");
 //        BigDecimal roundedValue = value.setScale(2, RoundingMode.HALF_UP);
 //        System.out.println(roundedValue); // Output: 123.46
-
-        if (entryTime.isAfter(exitTime)) {
-            throw new IlligalDateException("the entry date can not be after exit date");
-        }
 
         // 30 minutes is free
         if (Duration.between(entryTime, exitTime).toMinutes() <= 30) {
