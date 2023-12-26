@@ -1,6 +1,5 @@
 package model;
 
-import customExceptions.IlligalDateException;
 import util.Biller;
 
 import java.math.BigDecimal;
@@ -12,7 +11,7 @@ public class Check {
     private final BigDecimal bill;
     private final UUID id;
 
-    public Check(LocalDateTime arrivalTime, LocalDateTime departureTime) throws IlligalDateException {
+    public Check(LocalDateTime arrivalTime, LocalDateTime departureTime) {
         this.bill = Biller.calculateBill(arrivalTime, departureTime);
         this.id = UUID.randomUUID(); // Generate a unique ID using UUID
     }
@@ -23,5 +22,13 @@ public class Check {
 
     public BigDecimal getBill() {
         return bill;
+    }
+
+    @Override
+    public String toString() {
+        return "Check{" +
+                "bill=" + bill +
+                ", id=" + id +
+                '}';
     }
 }
