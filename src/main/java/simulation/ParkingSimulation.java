@@ -67,6 +67,8 @@ public class ParkingSimulation {
         cars.remove(car);
         parkedCars.add(car);
         System.out.println(ConsoleColors.ANSI_GREEN_BACKGROUND + currentTime.format(timeFormatter) +  ": car " + car.getRegNumber() + " arrives to the parkingLot" + ConsoleColors.ANSI_RESET);
+        car.park();
+        drawLine();
     }
 
     private void carLeavesToTheParkingLot(LocalDateTime currentTime){
@@ -78,6 +80,8 @@ public class ParkingSimulation {
         parkedCars.remove(car);
         cars.add(car);
         System.out.println(ConsoleColors.ANSI_CYAN_BACKGROUND + currentTime.format(timeFormatter) +  ": car " + car.getRegNumber() + " leaves the parkingLot" + ConsoleColors.ANSI_RESET);
+        car.leave();
+        drawLine();
     }
 
     public List<Car> getCars() {
@@ -90,5 +94,9 @@ public class ParkingSimulation {
 
     public ParkingLog getLog() {
         return log;
+    }
+
+    private void drawLine(){
+        System.out.println(ConsoleColors.BLACK + "#".repeat(100) + ConsoleColors.RESET);
     }
 }
