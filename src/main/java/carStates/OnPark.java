@@ -15,7 +15,7 @@ public class OnPark implements CarState {
 
     @Override
     public void leaveParking(Car car) {
-        System.out.println(ConsoleColors.ANSI_GREEN_BACKGROUND +
+        System.out.println(ConsoleColors.PURPLE +
                 "the car " + car.getRegNumber() + " has successfully left the parking lot, car state was changed to driving" +
                 ConsoleColors.RESET);
         car.setState(new OnRoute());

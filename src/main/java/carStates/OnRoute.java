@@ -8,7 +8,7 @@ import util.ConsoleColors;
 public class OnRoute implements CarState {
     @Override
     public void park(Car car) {
-        System.out.println(ConsoleColors.ANSI_GREEN_BACKGROUND + "the car " + car.getRegNumber() + " was parked successfully, car state was changed to parked" + ConsoleColors.RESET);
+        System.out.println(ConsoleColors.PURPLE + "the car " + car.getRegNumber() + " was parked successfully, car state was changed to parked" + ConsoleColors.RESET);
         car.setState(new OnPark());
     }
 
