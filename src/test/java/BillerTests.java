@@ -1,4 +1,3 @@
-import customExceptions.IlligalDateException;
 import org.junit.Test;
 import util.Biller;
 
@@ -53,7 +52,7 @@ public class BillerTests {
         LocalDateTime exitTime = LocalDateTime.of(2023, 12, 10, 13, 27);
 
         BigDecimal answer = getAnswer(entryTime, exitTime);
-        assertNull(answer);
+        assertEquals(BigDecimal.valueOf(0.0).setScale(2, RoundingMode.HALF_UP), answer);
     }
 
     @Test
@@ -66,12 +65,7 @@ public class BillerTests {
     }
 
     private static BigDecimal getAnswer(LocalDateTime entryTime, LocalDateTime exitTime) {
-        BigDecimal answer = null;
-        try {
-            answer = Biller.calculateBill(entryTime, exitTime);
-        } catch (IlligalDateException e) {
-            System.out.println(e.getMessage());
-        }
+        BigDecimal answer = Biller.calculateBill(entryTime, exitTime);;
         return answer;
     }
 }
