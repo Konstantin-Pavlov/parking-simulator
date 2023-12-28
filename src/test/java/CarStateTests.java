@@ -51,7 +51,7 @@ public class CarStateTests {
         String expected = ConsoleColors.RED_BACKGROUND +
                 "it is impossible to leave the parking lot because the car is on the way and is not in the parking lot" +
                 ConsoleColors.RESET + "\n";
-        String actual = outputStream.toString().replaceAll("\\r\\n", "\n");
+        String actual = outputStream.toString().replaceAll("\\r", "");
         assertEquals(expected, actual);
     }
 
@@ -63,7 +63,7 @@ public class CarStateTests {
         String expected = ConsoleColors.RED_BACKGROUND +
                 "it is impossible to park the car because the car is already parked and is in the parking lot" +
                 ConsoleColors.RESET + "\n";
-        String actual = outputStream.toString().replaceAll("\\r\\n", "\n");
+        String actual = outputStream.toString().replaceAll("\\r", "");
         assertEquals(expected, actual);
     }
 }
